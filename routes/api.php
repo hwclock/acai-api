@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PessoaController;
 use App\Http\Controllers\PixKeyController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group([], function() {
     Route::apiResource('pessoas', PessoaController::class);
     Route::apiResource('chaves', PixKeyController::class);
+    Route::apiResource('users', UserController::class);
 });

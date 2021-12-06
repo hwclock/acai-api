@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PixKey;
 use Illuminate\Http\Request;
 
 class PixKeyController extends Controller
@@ -24,7 +25,10 @@ class PixKeyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $obj = new PixKey();
+        $obj->fill($request->json()->all());
+        $obj->save();
+        return ['data' => $obj->id];
     }
 
     /**
@@ -58,6 +62,6 @@ class PixKeyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        PixKey::findOrFail($id)->delete();
     }
 }

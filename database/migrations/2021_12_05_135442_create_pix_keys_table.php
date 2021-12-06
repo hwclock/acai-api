@@ -17,7 +17,7 @@ class CreatePixKeysTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('chave')->unique();
-            $table->foreignId('proprietario')->constrained('pessoas');
+            $table->foreignId('proprietario')->constrained('pessoas')->onDelete('cascade');
         });
     }
 

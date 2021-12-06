@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pessoa;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class PessoaController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +25,7 @@ class PessoaController extends Controller
      */
     public function store(Request $request)
     {
-        $obj = new Pessoa();
+        $obj = new User();
         $obj->fill($request->json()->all());
         $obj->save();
         return ['data' => $obj->id];
@@ -62,6 +62,6 @@ class PessoaController extends Controller
      */
     public function destroy($id)
     {
-        Pessoa::findOrFail($id)->delete();
+        User::findOrFail($id)->delete();
     }
 }

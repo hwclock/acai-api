@@ -17,7 +17,7 @@ class CreatePessoasTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('nome', 100);
-            $table->foreignId('user')->constrained('users');
+            $table->foreignId('user')->constrained('users')->onDelete('cascade');
         });
     }
 

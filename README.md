@@ -6,6 +6,7 @@ ___
 
 * Necessario cria um banco de dados chamado `zetta-acai`
 
+    * `cp .env.example .env`
     * `npm ci`
     * `composer install`
     * `php artisan key:generate`

@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PixKey extends Model
 {
     use HasFactory;
+
+    protected $table = 'pix_keys';
+    protected $fillable = ['chave', 'proprietario'];
 }
