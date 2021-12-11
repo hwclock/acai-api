@@ -14,7 +14,13 @@ class PessoaController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $pessoas = Pessoa::all();
+        } catch (\Exception $e) {
+            return ['type' => 'error', 'data' => 'Erro ao consultar', 'details' => $e->getMessage()];
+        }
+
+        return ['type' => 'success', 'data' => $pessoas];
     }
 
     /**
@@ -26,9 +32,15 @@ class PessoaController extends Controller
     public function store(Request $request)
     {
         $obj = new Pessoa();
-        $obj->fill($request->json()->all());
-        $obj->save();
-        return ['data' => $obj->id];
+
+        try {
+            $obj->fill($request->json()->all());
+            $obj->save();
+        } catch (\Exception $e) {
+            return ['type' => 'error', 'data' => 'Erro ao salvar', 'details' => $e->getMessage()];
+        }
+
+        return ['type' => 'success', 'data' => $obj->id];
     }
 
     /**
@@ -39,7 +51,13 @@ class PessoaController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $pessoa = Pessoa::findOrFail($id);
+        } catch (\Exception $e) {
+            return ['type' => 'error', 'data' => 'Erro ao consultar', 'details' => $e->getMessage()];
+        }
+
+        return ['type' => 'success', 'data' => $pessoa];
     }
 
     /**
@@ -51,7 +69,15 @@ class PessoaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $obj = Pessoa::findOrFail($id);
+            $obj->fill($request->json()->all());
+            $obj->save();
+        } catch (\Exception $e) {
+            return ['type' => 'error', 'data' => 'Erro ao atualizar registro', 'details' => $e->getMessage()];
+        }
+
+        return ['type' => 'success', 'data' => 'Registro atualizado'];
     }
 
     /**

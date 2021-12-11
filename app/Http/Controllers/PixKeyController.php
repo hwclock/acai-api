@@ -14,7 +14,13 @@ class PixKeyController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $chaves = PixKey::all();
+        } catch (\Exception $e) {
+            return ['type' => 'error', 'data' => 'Erro ao consultar', 'details' => $e->getMessage()];
+        }
+
+        return ['type' => 'success', 'data' => $chaves];
     }
 
     /**
@@ -26,9 +32,15 @@ class PixKeyController extends Controller
     public function store(Request $request)
     {
         $obj = new PixKey();
-        $obj->fill($request->json()->all());
-        $obj->save();
-        return ['data' => $obj->id];
+        
+        try {
+            $obj->fill($request->json()->all());
+            $obj->save();
+        } catch (\Exception $e) {
+            return ['type' => 'error', 'data' => 'Erro ao salvar', 'details' => $e->getMessage()];
+        }
+
+        return ['type' => 'success', 'data' => $obj->id];
     }
 
     /**
@@ -39,7 +51,13 @@ class PixKeyController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $chave = PixKey::findOrFail($id);
+        } catch (\Exception $e) {
+            return ['type' => 'error', 'data' => 'Erro ao consultar', 'details' => $e->getMessage()];
+        }
+
+        return ['type' => 'success', 'data' => $chave];
     }
 
     /**
@@ -51,7 +69,15 @@ class PixKeyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $obj = PixKey::findOrFail($id);
+            $obj->fill($request->json()->all());
+            $obj->save();
+        } catch (\Exception $e) {
+            return ['type' => 'error', 'data' => 'Erro ao atualizar registro', 'details' => $e->getMessage()];
+        }
+
+        return ['type' => 'success', 'data' => 'Registro atualizado'];
     }
 
     /**
