@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pedido;
 use App\Models\PixKey;
 use Illuminate\Http\Request;
 
-class PixKeyController extends Controller
+class PedidosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class PixKeyController extends Controller
     public function index()
     {
         try {
-            $chaves = PixKey::all();
+            $chaves = Pedido::all();
         } catch (\Exception $e) {
             return ['type' => 'error', 'data' => 'Erro ao consultar', 'details' => $e->getMessage()];
         }
@@ -31,9 +32,14 @@ class PixKeyController extends Controller
      */
     public function store(Request $request)
     {
-        $obj = new PixKey();
+        $obj = new Pedido();
         
         try {
+            $chaves = PixKey::where('proprietario', $request->json('criador'))->get();
+            if (!$chaves->contains(PixKey::find($request->json('chave_pagamento')))) {
+                throw new \Exception('Essa chave não pertence ao criador do pedido');
+            }
+
             $obj->fill($request->json()->all());
             $obj->save();
         } catch (\Exception $e) {
@@ -52,12 +58,12 @@ class PixKeyController extends Controller
     public function show($id)
     {
         try {
-            $chave = PixKey::findOrFail($id);
+            $pedido = Pedido::findOrFail($id);
         } catch (\Exception $e) {
             return ['type' => 'error', 'data' => 'Erro ao consultar', 'details' => $e->getMessage()];
         }
 
-        return ['type' => 'success', 'data' => $chave];
+        return ['type' => 'success', 'data' => $pedido];
     }
 
     /**
@@ -70,7 +76,7 @@ class PixKeyController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $obj = PixKey::findOrFail($id);
+            $obj = Pedido::findOrFail($id);
             $obj->fill($request->json()->all());
             $obj->save();
         } catch (\Exception $e) {
@@ -88,17 +94,6 @@ class PixKeyController extends Controller
      */
     public function destroy($id)
     {
-        PixKey::findOrFail($id)->delete();
-    }
-
-    public function getByPessoa($pessoa)
-    {
-        try {
-            $obj = PixKey::all()->where('proprietario', $pessoa);
-        } catch (\Exception $e) {
-            return ['type' => 'error', 'data' => 'Erro ao consultar', 'details' => $e->getMessage()];
-        }
-
-        return ['type' => 'success', 'data' => $obj];
+        Pedido::findOrFail($id)->delete();
     }
 }
