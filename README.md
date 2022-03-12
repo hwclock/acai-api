@@ -1,10 +1,11 @@
-# Zetta Açaí
+# API Açaí
 
+* Protótipo de um aplicativo para pedir açaí
 ___
 
 ## Instalação
 
-* Necessario cria um banco de dados chamado `zetta-acai`
+* Necessario cria um banco de dados chamado `acai`
 
     * `cp .env.example .env`
     * `npm ci`
@@ -16,4 +17,4 @@ ___
     * `php artisan db:seed`
     * `php artisan serve` para rodar
 
-> Para testar a API, recomenda-se o uso do Insomnia, rotas disponíveis no arquivo `rotasZettaAcai.json` na raiz do projeto
+> Para testar a API, recomenda-se o uso do Insomnia, rotas disponíveis no arquivo `rotasAcai.json` na raiz do projeto
